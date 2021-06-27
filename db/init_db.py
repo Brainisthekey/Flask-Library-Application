@@ -1,7 +1,5 @@
 import sqlite3
 
-
-
 def initialization_database():
     connection = sqlite3.connect('db/database.db')
     with open('db/schema.sql') as f:

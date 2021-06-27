@@ -1,5 +1,3 @@
-from datetime import time
-from genericpath import exists
 from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
 from validate_data.check_and_filter_requestform import check_type_and_create_list_of_books, check_requests_form
