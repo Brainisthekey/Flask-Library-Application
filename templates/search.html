@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Add new book to liblary from GoogleBooks {% endblock %}</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" name="title"
+               placeholder="Book Title" class="form-control"
+               value="{{ request.form['title'] }}">
+        </input>
+    </div>
+
+    <div class="form-group">
+        <label for="authors">Authors</label>
+        <textarea name="authors" placeholder="Book Authors"
+                  class="form-control">{{ request.form['authors'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="publisher">Publisher</label>
+        <textarea name="publisher" placeholder="Book Publisher"
+                  class="form-control">{{ request.form['publisher'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="subject">Subject</label>
+        <textarea name="subject" placeholder="Book Subject"
+                  class="form-control">{{ request.form['subject'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="isbn">ISBN</label>
+        <textarea name="isbn" placeholder="Book ISBN"
+                  class="form-control">{{ request.form['isbn'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="lccn">LCCN</label>
+        <textarea name="lccn" placeholder="Book LCCN"
+                  class="form-control">{{ request.form['lccn'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="oclc">OCLC</label>
+        <textarea name="oclc" placeholder="Book OCLC"
+                  class="form-control">{{ request.form['oclc'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+{% endblock %}

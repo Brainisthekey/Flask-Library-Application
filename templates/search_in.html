@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Search in Liblary {% endblock %}</h1>
+    <form method="post">
+        <div class="form-group">
+            <label for="search_by_title">Title</label>
+            <input type="text" name="search_by_title"
+                placeholder="Book Title" class="form-control"
+                value="{{ request.form['title'] }}">
+            </input>
+        </div>
+
+        <div class="form-group">
+            <label for="search_by_authors">Authors</label>
+            <textarea name="search_by_authors" placeholder="Book Author"
+                    class="form-control">{{ request.form['search_by_authors'] }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="search_by_languages">Language</label>
+            <textarea name="search_by_languages" placeholder="Book language"
+                    class="form-control">{{ request.form['search_by_languages'] }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="search_by_date">Date</label>
+            <textarea name="search_by_date" placeholder="Book data"
+                    class="form-control">{{ request.form['search_by_date'] }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+    {% for book in Libraries %}
+        <a href="#">
+            <h2>{{ book['title'] }}</h2>
+        </a>
+        <strong>Authors:</strong> <span class="badge badge-info">{{ book['authors'] }}</span>
+        <br>
+        <strong>Published Year:</strong> <span class="badge badge-info">{{ book['publishedDate'] }}</span>
+        <br>
+        <strong>ISBN:</strong> <span class="badge badge-info">{{ book['ISBN'] }}</span>
+        <br>
+        <strong>Pages count:</strong> <span class="badge badge-info">{{ book['pagesCount'] }}</span>
+        <br>
+        <strong>Preview Link:</strong> <span class="badge badge-info">{{ book['previewLink'] }}</span>
+        <br>
+        <strong>Languages:</strong> <span class="badge badge-info">{{ book['languages'] }}</span>
+        <br>
+        <hr>
+    {% endfor %}
+{% endblock %}

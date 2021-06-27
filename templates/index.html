@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Welcome to Liblary {% endblock %}</h1>
+    <form method="post">
+        <a href="{{ url_for('delete_all') }}">
+            <span class="badge badge-danger"><h6>Delete all books</h6></span>
+        </a>
+    </form>
+    {% for book in Libraries %}
+        <a href="#">
+            <h2>{{ book['title'] }}</h2>
+        </a>
+        <strong>Authors:</strong> <span class="badge badge-info">{{ book['authors'] }}</span>
+        <br>
+        <strong>Published Year:</strong> <span class="badge badge-info">{{ book['publishedDate'] }}</span>
+        <br>
+        <strong>ISBN:</strong> <span class="badge badge-info">{{ book['ISBN'] }}</span>
+        <br>
+        <strong>Pages count:</strong> <span class="badge badge-info">{{ book['pagesCount'] }}</span>
+        <br>
+        <strong>Preview Link:</strong> <span class="badge badge-info">{{ book['previewLink'] }}</span>
+        <br>
+        <strong>Languages:</strong> <span class="badge badge-info">{{ book['languages'] }}</span>
+        <br>
+        <a href="{{ url_for('edit', id=book['id']) }}">
+            <span class="badge badge-warning">Edit</span>
+        </a>
+        <hr>
+    {% endfor %}
+{% endblock %}

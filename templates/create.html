@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Add new book to liblary {% endblock %}</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" name="title"
+               placeholder="Book Title" class="form-control"
+               value="{{ request.form['title'] }}">
+        </input>
+    </div>
+
+    <div class="form-group">
+        <label for="authors">Authors</label>
+        <textarea name="authors" placeholder="Book Authors"
+                  class="form-control">{{ request.form['authors'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="publishedDate">Published Date</label>
+        <textarea name="publishedDate" placeholder="Book Published Date"
+                  class="form-control">{{ request.form['publishedDate'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="ISBN">ISBN</label>
+        <textarea name="ISBN" placeholder="Book ISBN"
+                  class="form-control">{{ request.form['ISBN'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="pagesCount">Pages Count</label>
+        <textarea name="pagesCount" placeholder="Book Pages Count"
+                  class="form-control">{{ request.form['pagesCount'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="previewLink">Preview Link</label>
+        <textarea name="previewLink" placeholder="Book Preview Link"
+                  class="form-control">{{ request.form['previewLink'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="languages">Languages</label>
+        <textarea name="languages" placeholder="Book languages"
+                  class="form-control">{{ request.form['languages'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+{% endblock %}

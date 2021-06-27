@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Edit "{{ book['title'] }}" {% endblock %}</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" name="title" 
+               placeholder="Book Title"
+               class="form-control"
+               value="{{ request.form['title'] or book['title'] }}">
+        </input>
+    </div>
+
+    <div class="form-group">
+        <label for="authors">Authors</label>
+        <textarea name="authors" placeholder="Book Authors"
+                  class="form-control">{{ request.form['authors'] or book['authors'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="publishedDate">Published Date</label>
+        <textarea name="publishedDate" placeholder="Book Published Date"
+                  class="form-control">{{ request.form['publishedDate'] or book['publishedDate'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="ISBN">ISBN</label>
+        <textarea name="ISBN" placeholder="Book ISBN"
+                  class="form-control">{{ request.form['ISBN'] or book['ISBN'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="pagesCount">Pages Count</label>
+        <textarea name="pagesCount" placeholder="Book Pages Count"
+                  class="form-control">{{ request.form['pagesCount'] or book['pagesCount'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="previewLink">Preview Link</label>
+        <textarea name="previewLink" placeholder="Book Preview Link"
+                  class="form-control">{{ request.form['previewLink'] or book['previewLink'] }}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="languages">Languages</label>
+        <textarea name="languages" placeholder="Book languages"
+                  class="form-control">{{ request.form['languages'] or book['languages'] }}</textarea>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+<hr>
+<form action="{{ url_for('delete', id=book['id']) }}" method="POST">
+    <input type="submit" value="Delete Book"
+            class="btn btn-danger"
+            onclick="return confirm('Are you sure you want to delete this post?')">
+</form>
+{% endblock %}
