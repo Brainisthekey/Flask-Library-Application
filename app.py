@@ -1,8 +1,12 @@
+from datetime import time
+from genericpath import exists
 from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
 from validate_data.check_and_filter_requestform import check_type_and_create_list_of_books, check_requests_form
 from validate_data.search_in_liblary import check_format_to_search
 from db.db_commands import get_book, get_all_books_from_liblary, add_new_book_to_liblary, insert_books_from_GoogleBooks_into_database, edit_book_by_id, delete_book_by_id, delete_all_books
+import os
+from db.init_db import initialization_database
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
@@ -137,3 +141,10 @@ def search_in():
                 return redirect(url_for('search_in'))
         return render_template('search_in.html', Libraries=book)
     return render_template('search_in.html')
+
+if __name__ == '__main__':
+    if os.path.exists('db/database.db'):
+        app.run()
+    else:
+        initialization_database()
+        app.run()
