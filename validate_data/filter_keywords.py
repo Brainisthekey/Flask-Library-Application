@@ -94,9 +94,3 @@ def sorting_value_if_list(list_of_values: list) -> str:
 def sorting_ISBN(dict_of_elements: dict) -> str:
     """Sort the dictionary to become a string"""
     return ' : '.join(value for value in dict_of_elements.values())
-
-# a = add_books_to_dictionary(mode_of_sort='inauthor', keywords='flower')
-# print(a)
-#print(len(a))
-#print(sorting_ISBN({'type': 'ISBN_10', 'identifier': '8324072004'}))
-#print(sorting_value_if_list([{'type': 'ISBN_10', 'identifier': '8324072004'},{'type': 'ISBN_10', 'identifier': '8324072004'}]))

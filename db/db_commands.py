@@ -2,7 +2,7 @@ import sqlite3
 from werkzeug.exceptions import abort
 
 class Datalayer(object):
-    
+
     def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = super(Datalayer, cls).__new__(cls)
@@ -14,7 +14,7 @@ class Datalayer(object):
 
 def get_book(book_id):
     """Check if book exist in database"""
-    conn = Datalayer().conn.conn
+    conn = Datalayer().conn
     book = conn.execute('SELECT * FROM Libraries WHERE id = ?',
                         (book_id,)).fetchone()
     conn.close()
