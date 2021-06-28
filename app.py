@@ -183,7 +183,7 @@ def search_by_query_string():
 
 if __name__ == '__main__':
     if os.path.exists('db/database.db'):
-        app.run(host='0.0.0.0', port=5000)
+        app.run(debug=True, host='0.0.0.0')
     else:
         initialization_database()
-        app.run(host='0.0.0.0', port=5000)
+        app.run(debug=True, host='0.0.0.0')
