@@ -88,9 +88,7 @@ def edit(id):
         pagesCount = request.form['pagesCount']
         previewLink = request.form['previewLink']
         languages = request.form['languages']
-        #Вот здесь нужно добавить валидацию питоновским кодом, проверки данных
-        #Валидация должна быть такая же как и при добавлении новой книги
-        #Тоесть код может постариться
+
         if not all((title, authors, publishedDate, ISBN, pagesCount, previewLink, languages)):
             flash(message_all_fields)
         else:
@@ -106,8 +104,7 @@ def delete(id):
     flash('"{}" was successfully deleted!'.format(book['title']))
     return redirect(url_for('index'))
 
-#Узнать функция долждна называться так же как и путь,
-#Наверно нет, но попробывать стоит
+
 @app.route('/delete_all', methods=('POST', 'GET'))
 def delete_all():
     """Delete all books from the database"""
@@ -130,8 +127,8 @@ def search_in():
             flash(error_message_count_params)
             return redirect(url_for('search_in'))
         else:
-             = check_format_to_search(
-                       book             keyword=keyword_to_search,
+            book= check_format_to_search(
+                                    keyword=keyword_to_search,
                                     search_by_title=search_by_title,
                                     search_by_authors=search_by_authors,
                                     search_by_languages=search_by_languages,

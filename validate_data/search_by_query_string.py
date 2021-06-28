@@ -27,6 +27,5 @@ def search_in_query_date(date):
         return None
     else:
         return search_in_year(range_date)
-
     #What if return like that
-    #return eror_message_bad_format if range_date == 1 else 2
+    #return eror_message_bad_format if range_date == eror_message_bad_format else ...

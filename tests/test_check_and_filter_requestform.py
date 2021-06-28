@@ -6,7 +6,6 @@ from unittest import mock
 def test_check_requests_form(mock_validate_string):
 
     mock_validate_string.return_value = 'test'
-    
     #data_for_check_length_one = ['', 'test', '']
     assert check_requests_form(filed_of_request=data_for_check_length_one) == 'test'
     #data_for_check_length_two = ['test', 'test']
@@ -32,8 +31,7 @@ def test_validate_string():
     assert validate_string(string_to_validate=valid_string) == ' t e s t '
 
 
-#Записать себе, что мокать можно не указывая в какой функции проиходит вызов,
-#а просто указывать путь в каком модуле находиться эта функция
+
 @mock.patch('validate_data.check_and_filter_requestform.add_books_to_dictionary')
 def test_check_type_and_create_list_of_books(mock_add_book):
 

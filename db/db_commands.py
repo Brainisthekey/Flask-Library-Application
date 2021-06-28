@@ -93,7 +93,6 @@ def delete_all_books():
 
 def search_in_tittle(title: str):
     conn = Datalayer().conn
-    #Ахуел максиммально изза того, что параметры title должен быть написан именно (title,)
     book = conn.execute('SELECT * FROM Libraries WHERE title = ?', (title,)).fetchall()
     conn.close()
     return book
