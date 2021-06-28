@@ -1,7 +1,8 @@
+from typing import List, Optional
 from db.db_commands import search_in_author, search_in_tittle, search_in_language, search_in_year
 from data.notification_message import eror_message_bad_format, error_message_first_greater
 
-def formated_date(date) -> list:
+def formated_date(date) -> List:
     """
     Filter string and return errors if occured
 

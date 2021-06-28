@@ -18,7 +18,7 @@ def index():
     Libraries = get_all_books_from_liblary()
     return render_template('index.html', Libraries=Libraries)
 
-#Вот тут добавить валидацию на вызов пустых строк
+
 @app.route('/create', methods=('GET', 'POST'))
 def create():
     """Page to create a new book"""
@@ -130,8 +130,8 @@ def search_in():
             flash(error_message_count_params)
             return redirect(url_for('search_in'))
         else:
-            book = check_format_to_search(
-                                    keyword=keyword_to_search,
+             = check_format_to_search(
+                       book             keyword=keyword_to_search,
                                     search_by_title=search_by_title,
                                     search_by_authors=search_by_authors,
                                     search_by_languages=search_by_languages,

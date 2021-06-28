@@ -44,7 +44,7 @@ def add_new_book_to_liblary(
     (title, authors, publishedDate, ISBN, pagesCount, previewLink, languages))
     conn.commit()
     conn.close()
-    return 200
+    return 201
 
 def insert_books_from_GoogleBooks_into_database(list_of_books: list):
     """Add books to the database from GoogleBooksApi"""
