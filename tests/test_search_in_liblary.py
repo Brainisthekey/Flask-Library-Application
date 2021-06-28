@@ -80,5 +80,3 @@ def test_check_format_to_search(
                         search_by_languages='test',
                         search_by_date=''
     ) == return_value_object
-
-#Добавить поиск по годам

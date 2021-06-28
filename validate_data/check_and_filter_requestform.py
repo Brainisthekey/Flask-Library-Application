@@ -1,5 +1,8 @@
 from validate_data.filter_keywords import add_books_to_dictionary
 
+def check_date_request_form():
+    pass
+
 def check_requests_form(filed_of_request: list) -> str:
     """Check request.form:
         If only one field was completed -> return keyword_string,

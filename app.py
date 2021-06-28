@@ -5,6 +5,7 @@ from validate_data.search_in_liblary import check_format_to_search
 from db.db_commands import get_book, get_all_books_from_liblary, add_new_book_to_liblary, insert_books_from_GoogleBooks_into_database, edit_book_by_id, delete_book_by_id, delete_all_books
 import os
 from db.init_db import initialization_database
+from validate_data.search_by_query_string import search_in_query_title, search_in_query_author, search_in_query_language, search_in_query_date
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
@@ -118,7 +119,7 @@ def search_in():
         search_by_authors = request.form['search_by_authors']
         search_by_languages = request.form['search_by_languages']
         search_by_date = request.form['search_by_date']
-
+    
         keyword_to_search = check_requests_form([search_by_title, search_by_authors, search_by_languages, search_by_date])
         if keyword_to_search is None:
             flash("You can use only 1 parametr to search")
@@ -139,6 +140,26 @@ def search_in():
                 return redirect(url_for('search_in'))
         return render_template('search_in.html', Libraries=book)
     return render_template('search_in.html')
+
+@app.route('/books', methods=('GET','POST'))
+def search_by_query_string():
+    """Search by query string"""
+    request_title = request.args.get('title')
+    request_author = request.args.get('author')
+    request_language = request.args.get('language')
+    request_date = request.args.get('date')
+
+    if request_title:
+        books = search_in_query_title(title=request_title)
+    elif request_author:
+        books = search_in_query_author(author=request_author)
+    elif request_language:
+        books = search_in_query_language(language=request_language)
+    elif request_date:
+        books = search_in_query_date(date=request_date)
+    else:
+        return render_template('search_by_query.html')
+    return render_template('search_by_query.html', Libraries=books)
 
 if __name__ == '__main__':
     if os.path.exists('db/database.db'):
