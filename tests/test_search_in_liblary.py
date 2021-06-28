@@ -1,17 +1,22 @@
 from validate_data.search_in_liblary import formated_date, check_format_to_search
-from data.test_data import string_to_test_fromated_date, return_list_of_str_date, test_formated_date_none, return_none
+from data.test_data import string_to_test_fromated_date, return_list_of_str_date, test_formated_date_none, return_none, string_to_test_wrong_fromat, string_to_test_first_greater
+from data.notification_message import eror_message_bad_format, error_message_first_greater
 from unittest import mock
 
 
-def test_formated_date():
 
+
+def test_formated_date():
+    #
     assert formated_date(date=string_to_test_fromated_date) == return_list_of_str_date
 
     assert formated_date(date=test_formated_date_none) == return_none
 
+    assert formated_date(date=string_to_test_wrong_fromat) == eror_message_bad_format
 
-#Спросить не тупо ли что возвращаемый обьект здесь будет List[object from database]
-#А я пишу просто что список
+    assert formated_date(date=string_to_test_first_greater) == error_message_first_greater
+
+
 @mock.patch('validate_data.search_in_liblary.formated_date')
 @mock.patch('validate_data.search_in_liblary.search_in_year')
 @mock.patch('validate_data.search_in_liblary.search_in_language')

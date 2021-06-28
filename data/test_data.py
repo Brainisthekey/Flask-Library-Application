@@ -53,9 +53,10 @@ return_str_sorting_isbn = 'ISBN_10 : 4891947950'
 
 string_to_test_fromated_date = '1990-2020'
 return_list_of_str_date = [1990, 2020]
-
 test_formated_date_none = '77777'
 return_none = None
+string_to_test_wrong_fromat = '2020-02-03'
+string_to_test_first_greater = '2000-1900'
 
 data_for_check_length_one = ['', 'test', '']
 data_for_check_length_two = ['test', 'test']

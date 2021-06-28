@@ -1,5 +1,3 @@
-from os import error
-from typing import List
 from db.db_commands import search_in_author, search_in_tittle, search_in_language, search_in_year
 from data.notification_message import eror_message_bad_format, error_message_first_greater
 
