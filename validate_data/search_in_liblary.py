@@ -1,10 +1,19 @@
+from os import error
+from typing import List
 from db.db_commands import search_in_author, search_in_tittle, search_in_language, search_in_year
-
+from data.notification_message import eror_message_bad_format, error_message_first_greater
 
 def formated_date(date) -> list:
     """Filter string"""
     if '-' in date:
-        return date.split('-')
+        date_splited = date.split('-')
+        if len(date_splited) != 2:
+            return eror_message_bad_format
+        filtered_data = list(filter(lambda x: x.isnumeric() or x == '0', date_splited))
+        if len(filtered_data) == len(date_splited):
+            if int(filtered_data[0]) > int(filtered_data[1]):
+                return error_message_first_greater
+            return [int(year) for year in filtered_data]
     else:
         return None
 
@@ -27,7 +36,11 @@ def check_format_to_search(keyword, search_by_title, search_by_authors, search_b
     if keyword in search_by_languages:
         return search_in_language(search_by_languages)
     if keyword in search_by_date:
-        range_date = formated_date(search_by_date)
-        if range_date is not None:
-            return search_in_year(range_date)
-        return None
+        range_date = formated_date(date=search_by_date)
+        if range_date == eror_message_bad_format:
+            return eror_message_bad_format
+        elif range_date == error_message_first_greater:
+            return error_message_first_greater
+        elif range_date == None:
+            return None
+        return search_in_year(range_date)

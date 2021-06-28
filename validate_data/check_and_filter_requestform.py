@@ -14,6 +14,8 @@ def check_requests_form(filed_of_request: list) -> str:
     else:
         return None
 
+def iter_in_tuple_of_string(tuple_string: tuple) -> bool:
+    return len(list(filter(lambda x: validate_string(x), tuple_string))) == len(tuple_string)
 
 def validate_string(string_to_validate: str) -> str:
     """Return string if is not empty"""

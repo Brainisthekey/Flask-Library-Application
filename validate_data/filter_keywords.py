@@ -68,10 +68,22 @@ def sorting_a_single_book(params: dict) -> list:
         elif isinstance(value, int):
             result_to_return.append(str(value))
         elif isinstance(value, str):
-            result_to_return.append(value)
+            result_of_check = check_string_if_date(value)
+            result_to_return.append(result_of_check)
         elif isinstance(value, list):
             result_to_return.append(sorting_value_if_list(list_of_values=value))
     return result_to_return
+
+def check_string_if_date(date_string):
+    if date_string.find('-') != -1:
+        string_joined = ''.join(x for x in date_string[:4] if x.isnumeric() or x == '0')
+        if len(string_joined) == len(date_string[:4]):
+            return int(string_joined)
+        else:
+            return date_string
+    return date_string
+
+
 
 def sorting_value_if_list(list_of_values: list) -> str:
     """

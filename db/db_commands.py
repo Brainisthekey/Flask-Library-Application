@@ -32,7 +32,7 @@ def get_all_books_from_liblary():
 def add_new_book_to_liblary(
                         title: str,
                         authors: str,
-                        publishedDate: str,
+                        publishedDate: int,
                         ISBN: str,
                         pagesCount: str,
                         previewLink: str,

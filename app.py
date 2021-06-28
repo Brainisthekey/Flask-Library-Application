@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
-from validate_data.check_and_filter_requestform import check_type_and_create_list_of_books, check_requests_form
+from validate_data.check_and_filter_requestform import check_type_and_create_list_of_books, check_requests_form, iter_in_tuple_of_string
 from validate_data.search_in_liblary import check_format_to_search
 from db.db_commands import get_book, get_all_books_from_liblary, add_new_book_to_liblary, insert_books_from_GoogleBooks_into_database, edit_book_by_id, delete_book_by_id, delete_all_books
 import os
 from db.init_db import initialization_database
 from validate_data.search_by_query_string import search_in_query_title, search_in_query_author, search_in_query_language, search_in_query_date
+from data.notification_message import error_message_first_greater, eror_message_bad_format, error_wrong_input_format, message_none_result, error_message_count_params, message_all_fields, notification_delete_all, message_only_spaces
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
@@ -29,8 +31,11 @@ def create():
         previewLink = request.form['previewLink']
         languages = request.form['languages']
 
-        if not all((title, authors, publishedDate, ISBN, pagesCount, previewLink, languages)):
-            flash('All fields must be filled!')
+        tuple_with_request_form = (title, authors, publishedDate, ISBN, pagesCount, previewLink, languages)
+        if not all(tuple_with_request_form):
+            flash(message_all_fields)
+        elif not iter_in_tuple_of_string(tuple_with_request_form):
+            flash(message_only_spaces)
         else:
             add_new_book_to_liblary(title, authors, publishedDate, ISBN, pagesCount, previewLink, languages)
             return redirect(url_for('index'))
@@ -50,7 +55,7 @@ def search():
 
         keyword_to_search = check_requests_form([title, authors, publisher, subject, isbn, lccn, oclc])
         if keyword_to_search is None:
-            flash("You can use only 1 parametr to search")
+            flash(error_message_count_params)
             return redirect(url_for('search'))
         list_of_books = check_type_and_create_list_of_books(
                                                     params_to_search=keyword_to_search,
@@ -63,7 +68,7 @@ def search():
                                                     oclc=oclc
                                                     )
         if list_of_books is None:
-            flash("I didn't find anything for you request. Please, try again")
+            flash(message_none_result)
             return redirect(url_for('search'))
         else:
             insert_books_from_GoogleBooks_into_database(list_of_books)
@@ -87,7 +92,7 @@ def edit(id):
         #Валидация должна быть такая же как и при добавлении новой книги
         #Тоесть код может постариться
         if not all((title, authors, publishedDate, ISBN, pagesCount, previewLink, languages)):
-            flash('All fields must be filled!')
+            flash(message_all_fields)
         else:
             edit_book_by_id(title, authors, publishedDate, ISBN, pagesCount, previewLink, languages, id)
             return redirect(url_for('index'))
@@ -107,7 +112,7 @@ def delete(id):
 def delete_all():
     """Delete all books from the database"""
     delete_all_books()
-    flash('All books was successfully deleted!')
+    flash(notification_delete_all)
     return redirect(url_for('index'))
 
 
@@ -122,7 +127,7 @@ def search_in():
     
         keyword_to_search = check_requests_form([search_by_title, search_by_authors, search_by_languages, search_by_date])
         if keyword_to_search is None:
-            flash("You can use only 1 parametr to search")
+            flash(error_message_count_params)
             return redirect(url_for('search_in'))
         else:
             book = check_format_to_search(
@@ -133,10 +138,16 @@ def search_in():
                                     search_by_date=search_by_date
                                     )
             if book is None:
-                flash("Please write date in correct form: start_year-end_year. Example: 1990-2020")
+                flash(error_wrong_input_format)
+                return redirect(url_for('search_in'))
+            elif book == eror_message_bad_format:
+                flash(eror_message_bad_format)
+                return redirect(url_for('search_in'))
+            elif book == error_message_first_greater:
+                flash(error_message_first_greater)
                 return redirect(url_for('search_in'))
             elif book == []:
-                flash("I didn't find anything for you'r request, try again")
+                flash(message_none_result)
                 return redirect(url_for('search_in'))
         return render_template('search_in.html', Libraries=book)
     return render_template('search_in.html')
@@ -157,6 +168,18 @@ def search_by_query_string():
         books = search_in_query_language(language=request_language)
     elif request_date:
         books = search_in_query_date(date=request_date)
+        if books is None:
+            flash(error_wrong_input_format)
+            return redirect(url_for('search_by_query_string'))
+        elif books == eror_message_bad_format:
+            flash(eror_message_bad_format)
+            return redirect(url_for('search_by_query_string'))
+        elif books == error_message_first_greater:
+            flash(error_message_first_greater)
+            return redirect(url_for('search_by_query_string'))
+        elif books == []:
+            flash(message_none_result)
+            return redirect(url_for('search_by_query_string'))
     else:
         return render_template('search_by_query.html')
     return render_template('search_by_query.html', Libraries=books)
