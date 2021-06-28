@@ -1,5 +1,5 @@
-from validate_data.check_and_filter_requestform import check_requests_form, validate_string, check_type_and_create_list_of_books
-from data.test_data import data_for_check_length_one, data_for_check_length_two, validate_string_with_only_spaces, valid_string
+from validate_data.check_and_filter_requestform import check_requests_form, validate_string, check_type_and_create_list_of_books, iter_in_tuple_of_string
+from data.test_data import data_for_check_length_one, data_for_check_length_two, validate_string_with_only_spaces, valid_string, example_good_tuple, example_bad_tuple
 from unittest import mock
 
 @mock.patch('validate_data.check_and_filter_requestform.validate_string')
@@ -11,6 +11,18 @@ def test_check_requests_form(mock_validate_string):
     assert check_requests_form(filed_of_request=data_for_check_length_one) == 'test'
     #data_for_check_length_two = ['test', 'test']
     assert check_requests_form(filed_of_request=data_for_check_length_two) == None
+
+@mock.patch('validate_data.check_and_filter_requestform.filter')
+def test_iter_in_tuple_of_string(mock_filter):
+
+    mock_filter.return_value = example_good_tuple
+    #example_good_tuple = (1, 2, 3)
+    assert iter_in_tuple_of_string(example_good_tuple) == True
+
+    mock_filter.return_value = example_bad_tuple
+    #exaple_good_tuple = (1, 2)
+    assert iter_in_tuple_of_string(example_good_tuple) == False
+
 
 def test_validate_string():
 

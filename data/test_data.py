@@ -52,7 +52,7 @@ sorting_isbn = {'type': 'ISBN_10', 'identifier': '4891947950'}
 return_str_sorting_isbn = 'ISBN_10 : 4891947950'
 
 string_to_test_fromated_date = '1990-2020'
-return_list_of_str_date = ['1990', '2020']
+return_list_of_str_date = [1990, 2020]
 
 test_formated_date_none = '77777'
 return_none = None
@@ -63,3 +63,5 @@ data_for_check_length_two = ['test', 'test']
 validate_string_with_only_spaces = '  '
 valid_string = ' t e s t '
 
+example_good_tuple = (1, 2, 3)
+example_bad_tuple = (1, 2)
