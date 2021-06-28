@@ -1,6 +1,15 @@
 from typing import List, Optional
-from db.db_commands import search_in_author, search_in_tittle, search_in_language, search_in_year
-from data.notification_message import eror_message_bad_format, error_message_first_greater
+from db.db_commands import (
+    search_in_author,
+    search_in_tittle,
+    search_in_language,
+    search_in_year,
+)
+from data.notification_message import (
+    eror_message_bad_format,
+    error_message_first_greater,
+)
+
 
 def formated_date(date) -> List:
     """
@@ -15,11 +24,11 @@ def formated_date(date) -> List:
     Return:
         List[int, int]
     """
-    if '-' in date:
-        date_splited = date.split('-')
+    if "-" in date:
+        date_splited = date.split("-")
         if len(date_splited) != 2:
             return eror_message_bad_format
-        filtered_data = list(filter(lambda x: x.isnumeric() or x == '0', date_splited))
+        filtered_data = list(filter(lambda x: x.isnumeric() or x == "0", date_splited))
         if len(filtered_data) == len(date_splited):
             if int(filtered_data[0]) > int(filtered_data[1]):
                 return error_message_first_greater
@@ -28,7 +37,9 @@ def formated_date(date) -> List:
         return None
 
 
-def check_format_to_search(keyword, search_by_title, search_by_authors, search_by_languages, search_by_date):
+def check_format_to_search(
+    keyword, search_by_title, search_by_authors, search_by_languages, search_by_date
+):
     """
     Soring list of values
 

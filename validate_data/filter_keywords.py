@@ -1,6 +1,7 @@
 import requests
 
-base_path = 'https://www.googleapis.com/books/v1/volumes?q='
+base_path = "https://www.googleapis.com/books/v1/volumes?q="
+
 
 def search_books_api(mode_of_sort: str, keywords) -> dict:
     """
@@ -15,8 +16,9 @@ def search_books_api(mode_of_sort: str, keywords) -> dict:
     Return:
         Response json object
     """
-    response = requests.get(base_path + f'{mode_of_sort}:{keywords}')
+    response = requests.get(base_path + f"{mode_of_sort}:{keywords}")
     return response.json()
+
 
 def add_books_to_dictionary(mode_of_sort: str, keywords) -> list:
     """
@@ -34,23 +36,24 @@ def add_books_to_dictionary(mode_of_sort: str, keywords) -> list:
     list_to_return = []
     result_dict = {}
     result_of_sorting = search_books_api(mode_of_sort=mode_of_sort, keywords=keywords)
-    if result_of_sorting['totalItems'] == 0:
+    if result_of_sorting["totalItems"] == 0:
         return None
-    for book in result_of_sorting['items']:
-        result_dict[book['volumeInfo']['title']] = {
-            'title' : book['volumeInfo'].get('title', None),
-            'authors' : book['volumeInfo'].get('authors', None),
-            'publishedDate' : book['volumeInfo'].get('publishedDate', None),
-            'ISBN' : book['volumeInfo'].get('industryIdentifiers', None),
-            'pagesCount' : book['volumeInfo'].get('pageCount', None),
-            'previewLink' : book['volumeInfo'].get('previewLink', None),
-            'languages' : book['volumeInfo'].get('language', None)
-            }
+    for book in result_of_sorting["items"]:
+        result_dict[book["volumeInfo"]["title"]] = {
+            "title": book["volumeInfo"].get("title", None),
+            "authors": book["volumeInfo"].get("authors", None),
+            "publishedDate": book["volumeInfo"].get("publishedDate", None),
+            "ISBN": book["volumeInfo"].get("industryIdentifiers", None),
+            "pagesCount": book["volumeInfo"].get("pageCount", None),
+            "previewLink": book["volumeInfo"].get("previewLink", None),
+            "languages": book["volumeInfo"].get("language", None),
+        }
     for params in result_dict.values():
         sorted_params = sorting_a_single_book(params=params)
         list_to_return.append(sorted_params)
     return list_to_return
-    
+
+
 def sorting_a_single_book(params: dict) -> list:
     """
     Validate params in a single book
@@ -64,7 +67,7 @@ def sorting_a_single_book(params: dict) -> list:
     result_to_return = []
     for value in params.values():
         if value == None:
-            result_to_return.append('None')
+            result_to_return.append("None")
         elif isinstance(value, int):
             result_to_return.append(str(value))
         elif isinstance(value, str):
@@ -73,6 +76,7 @@ def sorting_a_single_book(params: dict) -> list:
         elif isinstance(value, list):
             result_to_return.append(sorting_value_if_list(list_of_values=value))
     return result_to_return
+
 
 def check_string_if_date(date_string: str) -> int:
     """
@@ -83,14 +87,13 @@ def check_string_if_date(date_string: str) -> int:
         str: if string doesn't contains date
         int: if string contains date
     """
-    if date_string.find('-') != -1:
-        string_joined = ''.join(x for x in date_string[:4] if x.isnumeric() or x == '0')
+    if date_string.find("-") != -1:
+        string_joined = "".join(x for x in date_string[:4] if x.isnumeric() or x == "0")
         if len(string_joined) == len(date_string[:4]):
             return int(string_joined)
         else:
             return date_string
     return date_string
-
 
 
 def sorting_value_if_list(list_of_values: list) -> str:
@@ -108,9 +111,10 @@ def sorting_value_if_list(list_of_values: list) -> str:
         if isinstance(element, str):
             return element
         if isinstance(element, dict):
-            list_of_strings.append(''.join(sorting_ISBN(dict_of_elements=element)))
-    return ' and '.join(x for x in list_of_strings)
+            list_of_strings.append("".join(sorting_ISBN(dict_of_elements=element)))
+    return " and ".join(x for x in list_of_strings)
+
 
 def sorting_ISBN(dict_of_elements: dict) -> str:
     """Sort the dictionary to become a string"""
-    return ' : '.join(value for value in dict_of_elements.values())
+    return " : ".join(value for value in dict_of_elements.values())
