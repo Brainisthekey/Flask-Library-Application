@@ -7,7 +7,8 @@ from unittest import mock
 
 
 def test_formated_date():
-    #
+    #string_to_test_fromated_date = '1999-2020'
+    #return_list_of_str_date = [1999, 2020]
     assert formated_date(date=string_to_test_fromated_date) == return_list_of_str_date
 
     assert formated_date(date=test_formated_date_none) == return_none

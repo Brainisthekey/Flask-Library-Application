@@ -2,7 +2,18 @@ from db.db_commands import search_in_author, search_in_tittle, search_in_languag
 from data.notification_message import eror_message_bad_format, error_message_first_greater
 
 def formated_date(date) -> list:
-    """Filter string"""
+    """
+    Filter string and return errors if occured
+
+    if length string is not equal 2:
+        return errors message
+    if string date is not a numeric:
+        return errors message
+    if first year greater than the second:
+        return error message
+    Return:
+        List[int, int]
+    """
     if '-' in date:
         date_splited = date.split('-')
         if len(date_splited) != 2:
@@ -25,7 +36,6 @@ def check_format_to_search(keyword, search_by_title, search_by_authors, search_b
         filter list object
     Return:
         Sorted params
-    
     """
     if keyword in search_by_title:
         return search_in_tittle(search_by_title)

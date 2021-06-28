@@ -75,6 +75,14 @@ def sorting_a_single_book(params: dict) -> list:
     return result_to_return
 
 def check_string_if_date(date_string: str) -> int:
+    """
+    Search date in a string
+    Params:
+        str
+    Return:
+        str: if string doesn't contains date
+        int: if string contains date
+    """
     if date_string.find('-') != -1:
         string_joined = ''.join(x for x in date_string[:4] if x.isnumeric() or x == '0')
         if len(string_joined) == len(date_string[:4]):

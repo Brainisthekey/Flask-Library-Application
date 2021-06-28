@@ -12,6 +12,7 @@ def check_requests_form(filed_of_request: list) -> str:
         return None
 
 def iter_in_tuple_of_string(tuple_string: tuple) -> bool:
+    """Return True if elements of tuple is not an empy strings else False"""
     return len(list(filter(lambda x: validate_string(x), tuple_string))) == len(tuple_string)
 
 def validate_string(string_to_validate: str) -> str:

@@ -5,12 +5,19 @@ from data.notification_message import eror_message_bad_format, error_message_fir
 
 
 def search_in_query_title(title):
+    """Search by query string in tittle"""
     return search_in_tittle(title)
+
 def search_in_query_author(author):
+    """Search by query string in author"""
     return search_in_author(author)
+
 def search_in_query_language(language):
+    """Search by query string in language"""
     return search_in_language(language)
+
 def search_in_query_date(date):
+    """Search by query string in date"""
     range_date = formated_date(date=date)
     if range_date == eror_message_bad_format:
         return eror_message_bad_format
