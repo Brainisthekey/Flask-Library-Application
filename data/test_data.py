@@ -65,3 +65,7 @@ valid_string = ' t e s t '
 
 example_good_tuple = (1, 2, 3)
 example_bad_tuple = (1, 2)
+
+string_date_without_dash = 'test'
+string_date_good_format = '2020-01-02'
+return_good_format_string = 2020

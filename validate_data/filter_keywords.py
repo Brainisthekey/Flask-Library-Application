@@ -74,7 +74,7 @@ def sorting_a_single_book(params: dict) -> list:
             result_to_return.append(sorting_value_if_list(list_of_values=value))
     return result_to_return
 
-def check_string_if_date(date_string):
+def check_string_if_date(date_string: str) -> int:
     if date_string.find('-') != -1:
         string_joined = ''.join(x for x in date_string[:4] if x.isnumeric() or x == '0')
         if len(string_joined) == len(date_string[:4]):

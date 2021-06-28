@@ -1,13 +1,16 @@
-from validate_data.filter_keywords import search_books_api, add_books_to_dictionary, sorting_a_single_book, sorting_value_if_list, sorting_ISBN
+from validate_data.filter_keywords import search_books_api, add_books_to_dictionary, sorting_a_single_book, sorting_value_if_list, sorting_ISBN, check_string_if_date
 from unittest import mock
-from data.test_data import response_google_api_book, return_value_api_book_total_items_0, sorted_params, return_from_add_books_to_dict, return_if_elements_in_list_int, return_if_elements_in_list_list, return_if_elements_in_list_none, return_if_elements_in_list_str, return_value_if_list, return_value_if_str, return_value_if_int, return_value_if_none, return_if_element_dict, return_value_if_dict, return_str_if_element_of_list_str, return_str, sorting_isbn, return_str_sorting_isbn
+from data.test_data import response_google_api_book, return_value_api_book_total_items_0, sorted_params, return_from_add_books_to_dict, return_if_elements_in_list_int, return_if_elements_in_list_list, return_if_elements_in_list_none, return_if_elements_in_list_str, return_value_if_list, return_value_if_str, return_value_if_int, return_value_if_none, return_if_element_dict, return_value_if_dict, return_str_if_element_of_list_str, return_str, sorting_isbn, return_str_sorting_isbn, string_date_without_dash, return_good_format_string, string_date_good_format
 
 
 
 @mock.patch('validate_data.filter_keywords.requests.get')
 def test_search_book_api(mock_request):
     mock_request.return_value = mock.Mock(
-        **{'status_code': 200, 'json.return_value': response_google_api_book}
+            **{
+                'status_code': 200,
+                'json.return_value':response_google_api_book
+                }
     )
     assert search_books_api(mode_of_sort='inauthor', keywords='flower') == response_google_api_book
 
@@ -35,6 +38,11 @@ def test_sorting_a_single_book(mock_sorting_if_list):
     
     assert sorting_a_single_book(params=return_if_elements_in_list_none) == return_value_if_none
 
+def test_check_string_if_date():
+
+    assert check_string_if_date(date_string=string_date_without_dash) == string_date_without_dash
+
+    assert check_string_if_date(date_string=string_date_good_format) == return_good_format_string
 
 @mock.patch('validate_data.filter_keywords.sorting_ISBN')
 def test_sorting_value_if_list(mock_sorting_isbn):
