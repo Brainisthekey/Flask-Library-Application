@@ -2,7 +2,16 @@
 
 {% block content %}
     <h1>{% block title %} Welcome to Liblary {% endblock %}</h1>
-    
+    <strong>Search - </strong> You can search book using query string<br>
+    You can search by <strong>title, author, language:</strong>
+    <h5><span class="badge badge-success">GET /books?title=Jack London</span></h5>
+    <h5><span class="badge badge-success">GET /books?author=Irving Stone</span></h5>
+    <h5><span class="badge badge-success">GET /books?language=un</span></h5>
+    <strong>Filtering - </strong> You can filter book using query string<br>
+    You can filter by <strong>date</strong>
+    <h5><span class="badge badge-success">GET /books?date=2000-2020</span></h5>
+    <br>
+    <hr>
     {% for book in Libraries %}
         <a href="#">
             <h2>{{ book['title'] }}</h2>
