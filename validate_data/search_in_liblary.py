@@ -1,5 +1,5 @@
-from typing import List, Optional
-from db.db_commands import (
+from typing import List
+from database.db_command_alch import (
     search_in_author,
     search_in_tittle,
     search_in_language,
