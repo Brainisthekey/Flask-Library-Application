@@ -1,27 +1,9 @@
-import os
+from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, url_for, flash, redirect
-from db.init_db import initialization_database
-from validate_data.search_in_liblary import check_format_to_search
-
 from validate_data.check_and_filter_requestform import (
     check_type_and_create_list_of_books,
     check_requests_form,
     iter_in_tuple_of_string,
-)
-from db.db_commands import (
-    get_book,
-    get_all_books_from_liblary,
-    add_new_book_to_liblary,
-    insert_books_from_GoogleBooks_into_database,
-    edit_book_by_id,
-    delete_book_by_id,
-    delete_all_books,
-)
-from validate_data.search_by_query_string import (
-    search_in_query_title,
-    search_in_query_author,
-    search_in_query_language,
-    search_in_query_date,
 )
 from data.notification_message import (
     error_message_first_greater,
@@ -34,20 +16,24 @@ from data.notification_message import (
     message_only_spaces,
 )
 
-
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SECRET_KEY"] = "your secret key"
 
+db = SQLAlchemy(app)
 
 @app.route("/", methods=("GET", "POST"))
 def index():
+    from database.db_command_alch import get_all_book
     """Main page"""
-    Libraries = get_all_books_from_liblary()
+    Libraries = get_all_book()
     return render_template("index.html", Libraries=Libraries)
 
 
 @app.route("/create", methods=("GET", "POST"))
 def create():
+    from database.db_command_alch import add_new_book_to_liblary
     """Page to create a new book"""
     if request.method == "POST":
         title = request.form["title"]
@@ -81,6 +67,7 @@ def create():
 
 @app.route("/search", methods=("GET", "POST"))
 def search():
+    from database.db_command_alch import insert_books_from_GoogleBooks_into_database
     """Search in GoogleBooks liblary"""
     if request.method == "POST":
         title = request.form["title"]
@@ -119,6 +106,7 @@ def search():
 @app.route("/<int:id>/edit", methods=("GET", "POST"))
 def edit(id):
     """Edit books"""
+    from database.db_command_alch import get_book, edit_book_by_id
     book = get_book(id)
     if request.method == "POST":
         title = request.form["title"]
@@ -151,14 +139,16 @@ def edit(id):
 
 @app.route("/<int:id>/delete", methods=("POST",))
 def delete(id):
+    from database.db_command_alch import delete_book_by_id
     """Delete book from database"""
     book = delete_book_by_id(id)
-    flash('"{}" was successfully deleted!'.format(book["title"]))
+    flash('"{}" was successfully deleted!'.format(book))
     return redirect(url_for("index"))
 
 
 @app.route("/delete_all", methods=("POST", "GET"))
 def delete_all():
+    from database.db_command_alch import delete_all_books
     """Delete all books from the database"""
     delete_all_books()
     flash(notification_delete_all)
@@ -167,6 +157,7 @@ def delete_all():
 
 @app.route("/search_in", methods=("POST", "GET"))
 def search_in():
+    from validate_data.search_in_liblary import check_format_to_search
     """Search book in created liblary"""
     if request.method == "POST":
         search_by_title = request.form["search_by_title"]
@@ -206,6 +197,12 @@ def search_in():
 
 @app.route("/books", methods=("GET", "POST"))
 def search_by_query_string():
+    from validate_data.search_by_query_string import (
+    search_in_query_title,
+    search_in_query_author,
+    search_in_query_language,
+    search_in_query_date,
+    )
     """Search by query string"""
     request_title = request.args.get("title")
     request_author = request.args.get("author")
@@ -238,8 +235,4 @@ def search_by_query_string():
 
 
 if __name__ == "__main__":
-    if os.path.exists("db/database.db"):
-        app.run(debug=True, host="0.0.0.0")
-    else:
-        initialization_database()
-        app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True)
