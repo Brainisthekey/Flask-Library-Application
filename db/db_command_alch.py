@@ -130,3 +130,4 @@ def search_in_year(date: list):
 
 def get_all_book():
     return db.session.query(Library).all()
+    
