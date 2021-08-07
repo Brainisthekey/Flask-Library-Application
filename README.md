@@ -26,4 +26,10 @@ Every filed has validation
 ## Tests
 
 All functionality covered in tests
+![Header](https://github.com/Brainisthekey/flask-app/blob/master/data/img/tests.png)
 
+## View
+
+### Main page
+
+![Header](https://github.com/Brainisthekey/flask-app/blob/master/data/img/main.png)
