@@ -2,13 +2,13 @@
 
 # Flask Library Application
 
-Simple flask application which allows user to seraching and adding books to the library.
+Simple flask application which allows user to serach and add books to the library.
 
 ## Functional requirements
 
 As user you can do:
-- Search books in Google API Books and in created library
-- Import books using [keywords](https://developers.google.com/books/docs/v1/using#WorkingVolumes)
+- Searching books in Google API Books and in created library
+- Importing books using [keywords](https://developers.google.com/books/docs/v1/using#WorkingVolumes)
 - Filtering results by:
   - title
   - author
