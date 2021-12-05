@@ -1,5 +1,3 @@
-![Header](https://github.com/Brainisthekey/flask-app/blob/master/data/img/library.png)
-
 # Flask Library Application
 
 Simple flask application which allows user to serach and add books to the library.
@@ -18,10 +16,6 @@ As user you can do:
 - Editing selected books
 - REST API
   - Filtering books by query string
-
-## Features
-
-Every filed has validation
 
 ## Tests
 
